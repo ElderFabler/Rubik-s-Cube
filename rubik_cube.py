@@ -1,6 +1,7 @@
 #-----------------------------------------
 #Author: me
-#v.0.0.2
+#v.0.0.2 - Added rotate-edges func
+#v.0.0.3 - Fixing rotate-edges func
 #have fun
 #-----------------------------------------
 
@@ -95,7 +96,11 @@ def rotate_edge(position):
                     ])
                 },
                 {
-                    "top":position[2]['top'],
+                    "top":np.array([
+                        position[2]['top'][2],
+                        position[2]['top'][1],
+                        position[2]['top'][0],
+                    ]).transpose(),
                     "bot":position[2]['bot']
                 }
             ],
@@ -125,7 +130,11 @@ def rotate_edge(position):
                     ])
                 },
                 {
-                    "top":position[2]['top'],
+                    "top":np.array([
+                        position[2]['top'][0,::-1],
+                        position[2]['top'][1,::-1],
+                        position[2]['top'][2,::-1],
+                    ]).transpose(),
                     "bot":position[2]['bot']
                 }
             ]
@@ -220,7 +229,11 @@ def rotate_edge(position):
                 },
                 {
                     "top":position[2]['top'],
-                    "bot":position[2]['bot']
+                    "bot":np.array([
+                        position[2]['bot'][:,2],
+                        position[2]['bot'][:,1],
+                        position[2]['bot'][:,0],
+                    ]),
                 }
             ],
             "right":[
@@ -250,7 +263,11 @@ def rotate_edge(position):
                 },
                 {
                     "top":position[2]['top'],
-                    "bot":position[2]['bot']
+                    "bot":np.array([
+                        position[2]['bot'][::-1,0],
+                        position[2]['bot'][::-1,1],
+                        position[2]['bot'][::-1,2],
+                    ]),
                 }
             ]
         },
@@ -263,13 +280,17 @@ def rotate_edge(position):
                         position[0]['front'][:,2],
                     ]).transpose(),
                     "back":np.array([
-                        position[2]['top'][:,0],
+                        position[0]['back'][:,0],
                         position[0]['back'][:,1],
-                        position[0]['back'][:,2],
+                        position[2]['top'][::-1,0],
                     ]).transpose()
                 },
                 {
-                    "left":position[1]['left'],
+                    "left":np.array([
+                        position[1]['left'][0,::-1],
+                        position[1]['left'][1,::-1],
+                        position[1]['left'][2,::-1],
+                    ]).transpose(),
                     "right":position[1]['right']
                 },
                 {
@@ -279,7 +300,7 @@ def rotate_edge(position):
                         position[2]['top'][:,2],
                     ]).transpose(),
                     "bot":np.array([
-                        position[0]['back'][:,0],
+                        position[0]['back'][::-1,2],
                         position[2]['bot'][:,1],
                         position[2]['bot'][:,2],
                     ]).transpose()
@@ -293,18 +314,22 @@ def rotate_edge(position):
                         position[0]['front'][:,2],
                     ]).transpose(),
                     "back":np.array([
-                        position[2]['bot'][:,0],
+                        position[0]['back'][:,0],
                         position[0]['back'][:,1],
-                        position[0]['back'][:,2],
+                        position[2]['bot'][::-1,0],
                     ]).transpose()
                 },
                 {
-                    "left":position[1]['left'],
+                    "left":np.array([
+                        position[1]['left'][2],
+                        position[1]['left'][1],
+                        position[1]['left'][0],
+                    ]).transpose(),
                     "right":position[1]['right']
                 },
                 {
                     "top":np.array([
-                        position[0]['back'][:,0],
+                        position[0]['back'][::-1,2],
                         position[2]['top'][:,1],
                         position[2]['top'][:,2],
                     ]).transpose(),
@@ -326,7 +351,7 @@ def rotate_edge(position):
                     ]).transpose(),
                     "back":np.array([
                         position[0]['back'][:,0],
-                        position[2]['top'][:,1],
+                        position[2]['top'][::-1,1],
                         position[0]['back'][:,2],
                     ]).transpose()
                 },
@@ -342,7 +367,7 @@ def rotate_edge(position):
                     ]).transpose(),
                     "bot":np.array([
                         position[2]['bot'][:,0],
-                        position[0]['back'][:,1],
+                        position[0]['back'][::-1,1],
                         position[2]['bot'][:,2],
                     ]).transpose()
                 },
@@ -387,14 +412,18 @@ def rotate_edge(position):
                         position[2]['bot'][:,2],
                     ]).transpose(),
                     "back":np.array([
-                        position[0]['back'][:,0],
+                        position[2]['top'][::-1,2],
                         position[0]['back'][:,1],
-                        position[2]['top'][:,2],
+                        position[0]['back'][:,2],
                     ]).transpose()
                 },
                 {
                     "left":position[1]['left'],
-                    "right":position[1]['right']
+                    "right":np.array([
+                        position[1]['right'][::-1,0],
+                        position[1]['right'][::-1,1],
+                        position[1]['right'][::-1,2],
+                    ]),
                 },
                 {
                     "top":np.array([
@@ -405,7 +434,7 @@ def rotate_edge(position):
                     "bot":np.array([
                         position[2]['bot'][:,0],
                         position[2]['bot'][:,1],
-                        position[0]['back'][:,2],
+                        position[0]['back'][::-1,0],
                     ]).transpose()
                 },
             ],
@@ -417,20 +446,24 @@ def rotate_edge(position):
                         position[2]['top'][:,2],
                     ]).transpose(),
                     "back":np.array([
-                        position[0]['back'][:,0],
+                        position[2]['bot'][::-1,2],
                         position[0]['back'][:,1],
-                        position[2]['bot'][:,2],
+                        position[0]['back'][:,2],
                     ]).transpose()
                 },
                 {
                     "left":position[1]['left'],
-                    "right":position[1]['right']
+                    "right":np.array([
+                        position[1]['right'][0,::-1],
+                        position[1]['right'][1,::-1],
+                        position[1]['right'][2,::-1],
+                    ]).transpose(),
                 },
                 {
                     "top":np.array([
                         position[2]['top'][:,0],
                         position[2]['top'][:,1],
-                        position[0]['back'][:,2],
+                        position[0]['back'][::-1,0],
                     ]).transpose(),
                     "bot":np.array([
                         position[2]['bot'][:,0],
@@ -448,14 +481,12 @@ def rotate_edge(position):
     position = chg_ptn[row_col][side]
     return position
 
-
-position = rotate_edge(position)
-print(position)
-position = rotate_edge(position)
-print(position)
-position = rotate_edge(position)
-print(position)
-position = rotate_edge(position)
-print(position)
-print(position[0]['front'])
+while True:
+    position = rotate_edge(position)
+    print(position[0]['front'])
+    print(position[0]['back'])
+    print(position[1]['left'])
+    print(position[1]['right'])
+    print(position[2]['top'])
+    print(position[2]['bot'])
 
