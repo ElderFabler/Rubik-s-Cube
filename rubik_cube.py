@@ -494,9 +494,9 @@ class Rubik_cube(object):
             if rn.choice(['all', 'edge']) == 'all':
                 self.position = self.chg_ptn_all[rn.choice(['left', 'right', 'up', 'down', 'reverse', 'around'])]
             else:
-                row_col = list(self.chg_ptn_edge.keys())
-                side = list(self.chg_ptn_edge[row_col].keys())
-                self.position = self.chg_ptn_edge[rn.choice(row_col)][rn.choice(side)]
+                row_col = rn.choice(list(self.chg_ptn_edge.keys()))
+                side = rn.choice(list(self.chg_ptn_edge[row_col].keys()))
+                self.position = self.chg_ptn_edge[row_col][side]
 
 
 
