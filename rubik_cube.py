@@ -2,6 +2,9 @@
 #Author: me
 #v.0.0.2 - Added rotate-edges func
 #v.0.0.3 - Fixing rotate-edges func
+#This program can cause seizures of epilepsy,
+# cancer of the left kidney or other side effects
+# (but this is not accurate)
 #have fun
 #-----------------------------------------
 
