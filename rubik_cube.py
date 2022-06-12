@@ -1,42 +1,45 @@
-#-----------------------------------------
-#Author: me
-#v.0.0.2 - Added rotate-edges func
-#v.0.0.3 - Fixing rotate-edges func
-#This program can cause seizures of epilepsy,
+# -----------------------------------------
+# Author: me
+# v.0.0.2 - Added rotate-edges func
+# v.0.0.3 - Fixing rotate-edges func
+# This program can cause seizures of epilepsy,
 # cancer of the left kidney or other side effects
 # (but this is not accurate)
-#have fun
-#-----------------------------------------
+# have fun
+# -----------------------------------------
 
 
 import numpy as np
 import random as rn
 from collections import Counter
 
-green = np.ones((3,3)).astype('<U1')
+green = np.ones((3, 3)).astype('<U1')
 green[:] = 'g'
-orange = np.ones((3,3)).astype('<U1')
+orange = np.ones((3, 3)).astype('<U1')
 orange[:] = 'o'
-blue = np.ones((3,3)).astype('<U1')
+blue = np.ones((3, 3)).astype('<U1')
 blue[:] = 'b'
-red = np.ones((3,3)).astype('<U1')
+red = np.ones((3, 3)).astype('<U1')
 red[:] = 'r'
-yellow = np.ones((3,3)).astype('<U1')
+yellow = np.ones((3, 3)).astype('<U1')
 yellow[:] = 'y'
-white = np.ones((3,3)).astype('<U1')
+white = np.ones((3, 3)).astype('<U1')
 white[:] = 'w'
 
 position = [
-    {'front':green,'back':blue},
-    {'left':orange,'right':red},
-    {'top':white,'bot':yellow},
-    ]
+    {'front': green, 'back': blue},
+    {'left': orange, 'right': red},
+    {'top': white, 'bot': yellow},
+]
 
-#pp = position[1]
+
+# pp = position[1]
 class Rubik_cube(object):
-    def __init__(self,position):
+    def __init__(self, position):
         self.position = position
-        self.chg_ptn_all = {
+
+    def rotate_all(self, side):
+        chg_ptn = {
             'left': [
                 {'front': self.position[1]['right'], 'back': self.position[1]['left']},
                 {'left': self.position[0]['front'], 'right': self.position[0]['back']},
@@ -71,7 +74,11 @@ class Rubik_cube(object):
                 {'top': self.position[2]['bot'], 'bot': self.position[2]['top']},
             ],
         }
-        self.chg_ptn_edge = {
+        self.position = chg_ptn[side]
+        return self.position
+
+    def rotate_edge(self, row_col, side):
+        chg_ptn = {
             "top": {
                 "left": [
                     {
@@ -477,27 +484,20 @@ class Rubik_cube(object):
                 ],
             },
         }
-
-    def rotate_all(self):
-        side = input('Enter side for rotate:\n')
-        self.position = self.chg_ptn_all[side]
-        return self.position
-
-    def rotate_edge(self):
-        row_col = input(f"Enter which row or column to rotate {list(self.chg_ptn_edge.keys())}:\n")
-        side = input(f"Enter side for rotate {list(self.chg_ptn_edge[row_col].keys())}:\n")
-        self.position = self.chg_ptn_edge[row_col][side]
+        self.position = chg_ptn[row_col][side]
         return self.position
 
     def random_rotate(self):
+        list_of_edges = {'top': ['left', 'right'], 'mid': ['left', 'right'], 'bot:': ['left', 'right'],
+                         'left': ['up', 'down'],
+                         'center': ['up', 'down'], 'right': ['up', 'down']}
         for i in range(int(input('Enter the number of turns\n'))):
             if rn.choice(['all', 'edge']) == 'all':
-                self.position = self.chg_ptn_all[rn.choice(['left', 'right', 'up', 'down', 'reverse', 'around'])]
+                self.rotate_all(rn.choice(['left', 'right', 'up', 'down', 'reverse', 'around']))
             else:
-                row_col = rn.choice(list(self.chg_ptn_edge.keys()))
-                side = rn.choice(list(self.chg_ptn_edge[row_col].keys()))
-                self.position = self.chg_ptn_edge[row_col][side]
-
+                row_col = rn.choice(list(list_of_edges.keys()))
+                side = rn.choice(list_of_edges[row_col])
+                self.rotate_edge(row_col, side)
 
 
 """ while True:
