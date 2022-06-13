@@ -9,32 +9,32 @@
 import numpy as np
 import random as rn
 from collections import Counter
+from random import choice
 
-green = np.ones((3,3)).astype('<U1')
-green[:] = 'g'
-orange = np.ones((3,3)).astype('<U1')
-orange[:] = 'o'
-blue = np.ones((3,3)).astype('<U1')
-blue[:] = 'b'
-red = np.ones((3,3)).astype('<U1')
-red[:] = 'r'
-yellow = np.ones((3,3)).astype('<U1')
-yellow[:] = 'y'
-white = np.ones((3,3)).astype('<U1')
-white[:] = 'w'
-
-position = [
-    {'front':green,'back':blue},
-    {'left':orange,'right':red},
-    {'top':white,'bot':yellow},
-    ]
 #pp = position[1]
 class Rubik_cube(object):
-    def __init__(self,position):
+    def __init__(self):
+        green = np.ones((3,3)).astype('<U1')
+        green[:] = 'g'
+        orange = np.ones((3,3)).astype('<U1')
+        orange[:] = 'o'
+        blue = np.ones((3,3)).astype('<U1')
+        blue[:] = 'b'
+        red = np.ones((3,3)).astype('<U1')
+        red[:] = 'r'
+        yellow = np.ones((3,3)).astype('<U1')
+        yellow[:] = 'y'
+        white = np.ones((3,3)).astype('<U1')
+        white[:] = 'w'
+
+        position = [
+            {'front':green,'back':blue},
+            {'left':orange,'right':red},
+            {'top':white,'bot':yellow},
+        ]
         self.position = position
 
-    def rotate_all(self):
-        side = input('Enter side for rotate:\n')
+    def rotate_all(self,side):
         chg_ptn = {
             'left':[
                 {'front':self.position[1]['right'],'back':self.position[1]['left']},
@@ -70,7 +70,7 @@ class Rubik_cube(object):
         self.position = chg_ptn[side]
         return self.position
 
-    def rotate_edge(self):
+    def rotate_edge(self,row_col,side):
         chg_ptn = {
             "top":{
                 "left":[
@@ -477,10 +477,33 @@ class Rubik_cube(object):
                 ],
             },
         }
-        row_col = input(f"Enter which row or column to rotate {list(chg_ptn.keys())}:\n")
-        side = input(f"Enter side for rotate {list(chg_ptn[row_col].keys())}:\n")
         self.position = chg_ptn[row_col][side]
         return self.position
+
+    def rand_pos(self,ran = 10):
+        wfunc = ['all','edge']
+        rotallli = ['left','right','up','down','reverse','around']
+        rotedgedi = {
+            'left':['up','down'],
+            'center':['up','down'],
+            'right':['up','down'],
+            'top':['left','right'],
+            'mid':['left','right'],
+            'bot':['left','right'],
+        }
+        pos = []
+        for i in range(0,20):
+            row_col = choice(list(rotedgedi.keys()))
+            funcdi = [
+                "self.rotate_all(choice(rotallli))",
+                "self.rotate_edge(row_col,choice(list(rotedgedi[row_col])))",
+            ]
+            randrot = eval(choice(funcdi))
+            pos.append(randrot)
+        self.position = pos[-1]
+        return self.position, pos
+
+
 
 """ while True:
     self.position = rotate_edge(self.position)
