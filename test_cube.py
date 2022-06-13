@@ -1,5 +1,5 @@
 import unittest
-from rubik_cube import position,Rubik_cube
+from rubik_cube import Rubik_cube
 
 top_left = [
     {'front':[
@@ -584,86 +584,86 @@ around_all = [
 
 class Test_cube(unittest.TestCase):
     def setUp(self):
-        self.rub_cube = Rubik_cube(position)
+        self.rub_cube = Rubik_cube()
 
-    def rot_edge(self):
-        pos = self.rub_cube.rotate_edge()
+    def rot_edge(self,row_col,side):
+        pos = self.rub_cube.rotate_edge(row_col,side)
         return pos
 
-    def rot_all(self,pos):
+    def rot_all(self,pos,side):
         self.rub_cube.position = pos
-        pos = self.rub_cube.rotate_all()
+        pos = self.rub_cube.rotate_all(side)
         return pos
 
     def test_01(self):
         #test top_left
-        for i,x in zip(self.rot_edge(),top_left):
+        for i,x in zip(self.rot_edge('top','left'),top_left):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("top_left"):
                         self.assertListEqual(list(k), z)
         #test right_down
-        for i,x in zip(self.rot_edge(),right_down):
+        for i,x in zip(self.rot_edge('right','down'),right_down):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("right_down"):
                         self.assertListEqual(list(k), z)
         #test left_up
-        for i,x in zip(self.rot_edge(),left_up):
+        for i,x in zip(self.rot_edge('left','up'),left_up):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("left_up"):
                         self.assertListEqual(list(k), z)
         #test bot_right
-        for i,x in zip(self.rot_edge(),bot_right):
+        for i,x in zip(self.rot_edge('bot','right'),bot_right):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("bot_right"):
                         self.assertListEqual(list(k), z)
         #test top_right
-        for i,x in zip(self.rot_edge(),top_right):
+        for i,x in zip(self.rot_edge('top','right'),top_right):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("top_right"):
                         self.assertListEqual(list(k), z)
         #test left_down
-        for i,x in zip(self.rot_edge(),left_down):
+        for i,x in zip(self.rot_edge('left','down'),left_down):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("left_down"):
                         self.assertListEqual(list(k), z)
         #test right_up
-        for i,x in zip(self.rot_edge(),right_up):
+        for i,x in zip(self.rot_edge('right','up'),right_up):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("right_up"):
                         self.assertListEqual(list(k), z)
         #test bot_left
-        for i,x in zip(self.rot_edge(),bot_left):
+        for i,x in zip(self.rot_edge('bot','left'),bot_left):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("bot_left"):
                         self.assertListEqual(list(k), z)
         #test mid_left
-        for i,x in zip(self.rot_edge(),mid_left):
+        for i,x in zip(self.rot_edge('mid','left'),mid_left):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("mid_left"):
                         self.assertListEqual(list(k), z)
         #test center_down
-        for i,x in zip(self.rot_edge(),center_down):
+        for i,x in zip(self.rot_edge('center','down'),center_down):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("center_down"):
                         self.assertListEqual(list(k), z)
         #test mid_right
-        for i,x in zip(self.rot_edge(),mid_right):
+        for i,x in zip(self.rot_edge('mid','right'),mid_right):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("mid_right"):
                         self.assertListEqual(list(k), z)
         #test center_up
-        for i,x in zip(self.rot_edge(),center_up):
+        for i,x in zip(self.rot_edge('center','up'),center_up):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("center_up"):
@@ -671,42 +671,42 @@ class Test_cube(unittest.TestCase):
 
     def test_02(self):
         #test all_left
-        pos = self.rot_all(center_up)
+        pos = self.rot_all(center_up,'left')
         for i,x in zip(pos,left_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("all_left"):
                         self.assertListEqual(list(k), z)
         #test all_up
-        pos = self.rot_all(pos)
+        pos = self.rot_all(pos,'up')
         for i,x in zip(pos,up_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("all_up"):
                         self.assertListEqual(list(k), z)
         #test all_right
-        pos = self.rot_all(pos)
+        pos = self.rot_all(pos,'right')
         for i,x in zip(pos,right_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("all_right"):
                         self.assertListEqual(list(k), z)
         #test all_down
-        pos = self.rot_all(pos)
+        pos = self.rot_all(pos,'down')
         for i,x in zip(pos,down_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("all_down"):
                         self.assertListEqual(list(k), z)
         #test all_revers
-        pos = self.rot_all(pos)
+        pos = self.rot_all(pos,'reverse')
         for i,x in zip(pos,revers_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
                     with self.subTest("all_reverse"):
                         self.assertListEqual(list(k), z)
         #test all_around
-        pos = self.rot_all(pos)
+        pos = self.rot_all(pos,'around')
         for i,x in zip(pos,around_all):
             for j,y in zip(i.keys(),x.keys()):
                 for k,z in zip(i[j],x[y]):
